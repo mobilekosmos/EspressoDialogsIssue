@@ -45,10 +45,10 @@ class MainActivity2Test {
             Assert.assertTrue(scenario.getState() == Lifecycle.State.RESUMED)
             Log.d("+++", "0")
             IdlingRegistry.getInstance().register(mIdlingResource)
-            Log.d("+++", "3")
+            Log.d("+++", "1")
             // TOFIX: Espresso doesn't find anything and we get the timeout exception.
             Espresso.onView(withText("OK")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-            Log.d("+++", "4")
+            Log.d("+++", "2")
         })
     }
 

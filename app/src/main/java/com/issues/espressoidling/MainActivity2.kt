@@ -2,12 +2,10 @@ package com.issues.espressoidling
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.test.espresso.idling.CountingIdlingResource
 import com.sophos.smsec.core.resources.ui.CustomDialog
-import kotlinx.android.synthetic.main.activity_main2.*
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -27,11 +25,22 @@ class MainActivity2 : AppCompatActivity(), CustomDialog.CustomDialogFragmentCall
         showDelay()
     }
 
+    private fun showCustomDialog() {
+        buildMeAnAlertDialog()
+        var fragmentId = "MainActivity2" + this.hashCode().toString()
+        val ft = supportFragmentManager.beginTransaction()
+        mCustomDialog = CustomDialog.newInstance(fragmentId)
+        ft.add(mCustomDialog, fragmentId)
+        if (!isFinishing) {
+            ft.commit()
+        }
+    }
+
     public fun showDelay() {
         espressoTestIdlingResource.increment();
         Timer("SettingUp0", false).schedule(2000) {
             runOnUiThread {
-                BuildMeAnAlertDialog2()
+                buildMeAnAlertDialog2()
             }
         }
         Timer("SettingUp", false).schedule(15000) {
@@ -42,18 +51,7 @@ class MainActivity2 : AppCompatActivity(), CustomDialog.CustomDialogFragmentCall
         }
     }
 
-    private fun showCustomDialog() {
-        BuildMeAnAlertDialog()
-        var fragmentId = "MainActivity2" + this.hashCode().toString()
-        val ft = supportFragmentManager.beginTransaction()
-        mCustomDialog = CustomDialog.newInstance(fragmentId)
-        ft.add(mCustomDialog, fragmentId)
-        if (!isFinishing) {
-            ft.commit()
-        }
-    }
-
-    private fun BuildMeAnAlertDialog() {
+    private fun buildMeAnAlertDialog() {
         val builder = AlertDialog.Builder(this@MainActivity2)
         builder.setTitle("Issue title 1")
         builder.setMessage("Are you sure you want to wait?")
@@ -65,7 +63,7 @@ class MainActivity2 : AppCompatActivity(), CustomDialog.CustomDialogFragmentCall
         dialog = builder.create()
     }
 
-    private fun BuildMeAnAlertDialog2() {
+    private fun buildMeAnAlertDialog2() {
         val builder = AlertDialog.Builder(this@MainActivity2)
         builder.setTitle("Delay")
         builder.setMessage("Delay...")
