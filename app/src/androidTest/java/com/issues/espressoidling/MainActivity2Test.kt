@@ -18,6 +18,7 @@ import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.isInternal
 import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.CoreMatchers.not
@@ -34,7 +35,7 @@ class MainActivity2Test {
     private lateinit var mIdlingResource: IdlingResource
 
     @Test
-    fun useAppContext() {
+    fun proveEspressoDialogsIssue() {
         ActivityScenario.launch(MainActivity2::class.java).use({ scenario ->
             Log.d("+++", "state: " + scenario.getState())
             scenario.onActivity(ActivityAction<MainActivity2> { activity ->
@@ -47,7 +48,7 @@ class MainActivity2Test {
             IdlingRegistry.getInstance().register(mIdlingResource)
             Log.d("+++", "1")
             // TOFIX: Espresso doesn't find anything and we get the timeout exception.
-            Espresso.onView(withText("OK")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            Espresso.onView(withText("OK")).inRoot(isDialog()).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
             Log.d("+++", "2")
         })
     }

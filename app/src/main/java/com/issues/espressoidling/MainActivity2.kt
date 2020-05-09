@@ -43,7 +43,7 @@ class MainActivity2 : AppCompatActivity(), CustomDialog.CustomDialogFragmentCall
                 buildMeAnAlertDialog2()
             }
         }
-        Timer("SettingUp", false).schedule(15000) {
+        Timer("SettingUp", false).schedule(5000) {
             runOnUiThread {
                 dialog2.dismiss()
                 espressoTestIdlingResource.decrement();
