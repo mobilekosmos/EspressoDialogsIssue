@@ -1,6 +1,7 @@
 package com.issues.espressoidling
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -21,8 +22,11 @@ class MainActivity2 : AppCompatActivity(), CustomDialog.CustomDialogFragmentCall
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main2)
-        showCustomDialog()
-        showDelay()
+        val otherActivity = Intent(this, MainActivity::class.java)
+        startActivity(otherActivity)
+        finish()
+//        showCustomDialog()
+//        showDelay()
     }
 
     private fun showCustomDialog() {
