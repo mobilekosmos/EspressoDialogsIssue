@@ -11,7 +11,6 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.After
@@ -28,11 +27,11 @@ class MainActivity2Test {
 
     private lateinit var mIdlingResource: IdlingResource
 
-//    @Test
+    @Test
     fun proveEspressoDialogsIssue() {
-        ActivityScenario.launch(MainActivity2::class.java).use({ scenario ->
+        ActivityScenario.launch(MainActivity3::class.java).use({ scenario ->
             Log.d("+++", "state: " + scenario.getState())
-            scenario.onActivity(ActivityAction<MainActivity2> { activity ->
+            scenario.onActivity(ActivityAction<MainActivity3> { activity ->
                 mIdlingResource = activity.getIdlingResource()
                 // To prove that the test fails, omit this call:
                 //                    IdlingRegistry.getInstance().register(mIdlingResource);
@@ -42,7 +41,8 @@ class MainActivity2Test {
             IdlingRegistry.getInstance().register(mIdlingResource)
             Log.d("+++", "1")
             // TOFIX: Espresso doesn't find anything and we get the timeout exception.
-            Espresso.onView(withText("OK")).inRoot(isDialog()).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            Espresso.onView(withText("OK")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+//            Espresso.onView(withText("OK")).inRoot(isDialog()).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
             Log.d("+++", "2")
         })
     }
@@ -71,6 +71,7 @@ class MainActivity2Test {
         Intents.init()
         ActivityScenario.launch(MainActivity2::class.java).use({ scenario ->
             Log.d("+++", "state: " + scenario.getState())
+            Espresso.onIdle()
             intended(
                 hasComponent(
                     MainActivity::class.java.getName()
