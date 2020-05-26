@@ -50,9 +50,18 @@ class MainActivity2Test {
     @Test
     fun proveEspressoIntendedIssue0() {
         Intents.init()
+
+        // Java version
+        // try(ActivityScenario<MyActivity> scenario = ActivityScenario.launch(MyActivity.class)) {
+        //     scenario.onActivity(activity -> {
+        //       assertThat(activity.getSomething()).isEqualTo("something");
+        //     });
+        //   }
+
         ActivityScenario.launch(MainActivity2::class.java).use({ scenario ->
             Log.d("+++", "state: " + scenario.getState())
             Espresso.closeSoftKeyboard()
+
             intended(
                 hasComponent(
                     MainActivity::class.java.getName()
@@ -69,6 +78,7 @@ class MainActivity2Test {
     @Test
     fun proveEspressoIntendedIssue1() {
         Intents.init()
+
         ActivityScenario.launch(MainActivity2::class.java).use({ scenario ->
             Log.d("+++", "state: " + scenario.getState())
             Espresso.onIdle()
